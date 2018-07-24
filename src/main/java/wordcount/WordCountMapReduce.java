@@ -1,4 +1,4 @@
-package dj;
+package wordcount;
 
 import java.io.IOException;
 
@@ -14,13 +14,16 @@ public class WordCountMapReduce {
 	public static void main(String[] args) throws Exception{
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "wordcount");
+		
 		job.setJarByClass(WordCountMapReduce.class);
 		job.setMapperClass(WordcountMapper.class);
 		job.setReducerClass(WordCountReducer.class);
+		
 		job.setMapOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setMapOutputValueClass(IntWritable.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
+		//设置输入输出参数
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		

@@ -1,10 +1,12 @@
-package com.dj.demo1_hadoop;
+package flowCount;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class FlowBean {
+import org.apache.hadoop.io.Writable;
+
+public class FlowBean implements Writable {
 	private long upFlow;
 	private long dFlow;
 	private long sumFlow;
@@ -15,9 +17,8 @@ public class FlowBean {
 	
 	public FlowBean(long upFlow, long dFlow) {
 		this.upFlow = upFlow;
-		this.dFlow  = dFlow;
+		this.dFlow = dFlow;
 		this.sumFlow = upFlow + dFlow;
-		
 	}
 
 	public long getUpFlow() {
@@ -43,21 +44,21 @@ public class FlowBean {
 	public void setSumFlow(long sumFlow) {
 		this.sumFlow = sumFlow;
 	}
-	
+
 	public void write(DataOutput out) throws IOException {
 		out.writeLong(upFlow);
 		out.writeLong(dFlow);
 		out.writeLong(sumFlow);
 	}
-	
-	public void readFile(DataInput in) throws IOException {
+
+	public void readFields(DataInput in) throws IOException {
 		upFlow = in.readLong();
 		dFlow = in.readLong();
-		sumFlow = in.readLong();
+		sumFlow = in.readLong();	
 	}
 	
 	public String toString() {
-		return upFlow + "***" + dFlow + "***" + sumFlow;				
+		return upFlow + "\t" + dFlow + "\t" +sumFlow;
 	}
 	
 }
